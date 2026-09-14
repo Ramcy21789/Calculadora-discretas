@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculadora de Matemáticas Discretas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -23,9 +26,9 @@
         <!--Panel Central (Entrada y Teclado)-->
         <main class="main-panel">
             <div class="input-section">
-                <h2>SOLVER DE CONJUNTOS</h2>
-                <Input type="text" id="math-input" placeholder="Escribe tu operacion">
-                <button class="solve-btn">Solver</button>
+                <h2>SOLVER GENERAL</h2>
+                <input type="text" id="math-input" placeholder="Escribe tu operación (Ej: A ∪ B, p ∧ q)">
+                <button class="solve-btn" style="display:none;">Solver</button>
             </div>
 
             <!--Teclado-->
@@ -51,9 +54,9 @@
                     <button onclick="insertSymbol('A')">A</button>
                     <button onclick="insertSymbol('B')">B</button>
                     <button onclick="insertSymbol('C')">C</button>
-                    <button onclick="insertSymbol('U')">U</button>
-                    <button onclick="insertSymbol('⊆')">⊆</button>
-                    <button onclick="insertSymbol('∈')">∈</button>
+                    <button onclick="insertSymbol('p')">p</button>
+                    <button onclick="insertSymbol('q')">q</button>
+                    <button onclick="insertSymbol('r')">r</button>
 
                     <!-- Fila 4: Agrupación y Relación -->
                     <button onclick="insertSymbol('≠')">≠</button>
@@ -71,7 +74,7 @@
                     <button class="span-row-2" onclick="insertSymbol('«')">«</button>
                     <button class="span-row-2" onclick="insertSymbol('»')">»</button>
 
-                    <!-- Fila 6: Números y Operadores (El grid acomoda los huecos automáticamente) -->
+                    <!-- Fila 6: Números y Operadores -->
                     <button onclick="insertSymbol('4')">4</button>
                     <button onclick="insertSymbol('5')">5</button>
                     <button onclick="insertSymbol('6')">6</button>
@@ -96,31 +99,52 @@
         <!-- PANEL DERECHO (Resultados) -->
         <aside class="results-panel">
             <div class="venn-diagram-box">
-                <h3>Visualización de Diagrama de Venn</h3>
-                <div class="placeholder-diagram">
-                    <!-- Aquí irá el gráfico generado por JS más adelante -->
-                    [Área del Diagrama]
+                <h3>Visualización (Diagrama de Venn)</h3>
+                <div class="placeholder-diagram" id="diagram-container">
+                    <svg id="venn-svg" width="200" height="150" style="display:none;">
+                        <!-- SVG para diagramas dinámicos -->
+                        <circle cx="70" cy="75" r="45" fill="rgba(102, 252, 241, 0.3)" stroke="#66fcf1" stroke-width="2"/>
+                        <circle cx="130" cy="75" r="45" fill="rgba(69, 162, 71, 0.3)" stroke="#45a247" stroke-width="2"/>
+                        <text x="50" y="75" fill="#fff" font-size="14">A</text>
+                        <text x="140" y="75" fill="#fff" font-size="14">B</text>
+                    </svg>
+                    <span id="diagram-text">Esperando expresión...</span>
                 </div>
             </div>
             <div class="steps-box">
                 <h3>Solución Paso a Paso:</h3>
                 <ul id="solution-steps">
-                    <!-- Aquí inyectaremos los pasos desde Python -->
                     <li>Esperando expresión...</li>
                 </ul>
             </div>
         </aside>
     </div>
 
-    <!-- Script sencillo para que el teclado funcione -->
+    <!-- Contenedor de notificaciones -->
+    <div id="toast-container"></div>
+
     <script>
-        function insertSymbol(symbol) {
-            const inputField = document.getElementById('math-input');
-            inputField.value += symbol;
-            inputField.focus();
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
-    </script>
-    <script>
+
+        // Sidebar logic
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
         // Función para insertar símbolos
         function insertSymbol(symbol) {
             const inputField = document.getElementById('math-input');
@@ -141,11 +165,13 @@
             const listSteps = document.getElementById('solution-steps');
             
             if (!expresion.trim()) {
-                alert("Por favor, ingresa una expresión.");
+                showToast("Por favor, ingresa una expresión.");
                 return;
             }
 
             listSteps.innerHTML = "<li>Procesando...</li>";
+            document.getElementById('venn-svg').style.display = 'block';
+            document.getElementById('diagram-text').style.display = 'none';
 
             fetch('/resolver', {
                 method: 'POST',
@@ -158,7 +184,8 @@
             .then(data => {
                 listSteps.innerHTML = "";
                 if (data.error) {
-                    listSteps.innerHTML = `<li>Error: ${data.error}</li>`;
+                    showToast(data.error);
+                    listSteps.innerHTML = `<li>Error al evaluar.</li>`;
                 } else if (data.pasos_solucion) {
                     data.pasos_solucion.forEach(paso => {
                         const li = document.createElement("li");
@@ -171,11 +198,11 @@
             })
             .catch(error => {
                 console.error("Error:", error);
-                listSteps.innerHTML = "<li>Error al conectar con el servidor.</li>";
+                showToast("Error al conectar con el servidor.");
+                listSteps.innerHTML = "<li>Error de conexión.</li>";
             });
         }
     </script>
-
 </body>
 
 </html>
