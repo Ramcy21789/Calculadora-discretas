@@ -22,7 +22,7 @@
 body {
     background-color: var(--bg-color);
     background-image: radial-gradient(circle at top left, #1f2833, transparent 40%),
-                      radial-gradient(circle at bottom right, #283c86, transparent 40%);
+        radial-gradient(circle at bottom right, #283c86, transparent 40%);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -125,7 +125,7 @@ header h1 {
     padding: 20px;
     border-radius: 12px;
     border: 1px solid var(--panel-border);
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     color: var(--text-title);
     font-size: 1.5rem;
     font-family: monospace;
@@ -188,7 +188,7 @@ header h1 {
     background: var(--solver-bg) !important;
     color: white !important;
     border: none !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     font-size: 1.3rem !important;
 }
 
@@ -204,7 +204,8 @@ header h1 {
     gap: 20px;
 }
 
-.venn-diagram-box, .steps-box {
+.venn-diagram-box,
+.steps-box {
     background: var(--panel-bg);
     backdrop-filter: blur(10px);
     border: 1px solid var(--panel-border);
@@ -213,7 +214,8 @@ header h1 {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
-.venn-diagram-box h3, .steps-box h3 {
+.venn-diagram-box h3,
+.steps-box h3 {
     color: var(--accent);
     margin-bottom: 15px;
     font-weight: 600;
@@ -224,7 +226,7 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 12px;
     border: 1px dashed var(--panel-border);
     color: #888;
@@ -267,7 +269,7 @@ header h1 {
     color: white;
     padding: 15px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
     animation: slideIn 0.3s ease forwards;
     display: flex;
@@ -276,12 +278,21 @@ header h1 {
 }
 
 @keyframes fadeIn {
-    to { opacity: 1; }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Responsive */
@@ -289,11 +300,13 @@ header h1 {
     .app-container {
         flex-direction: column;
     }
+
     .sidebar {
         flex-direction: row;
         overflow-x: auto;
         flex: auto;
     }
+
     .results-panel {
         flex: auto;
     }

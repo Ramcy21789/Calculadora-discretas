@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Matemáticas Discretas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,194 +16,484 @@
         <h1>Calculadora de Matemáticas Discretas</h1>
     </header>
     <div class="app-container">
+
         <!--Barra Lateral-->
         <aside class="sidebar">
-            <button class="nav-btn active">Teoría de Conjuntos</button>
-            <button class="nav-btn">Lógica Proposicional</button>
-            <button class="nav-btn">Combinatorias</button>
-            <button class="nav-btn">Teoría de Grafos</button>
+            <p class="sidebar-title">Módulos</p>
+            <button class="nav-btn active" data-mode="conjuntos">🔵 Teoría de Conjuntos</button>
+            <button class="nav-btn" data-mode="logica">🔀 Lógica Proposicional</button>
+            <button class="nav-btn" data-mode="combinatoria">🔢 Combinatorias</button>
+            <button class="nav-btn" data-mode="grafos">🕸️ Teoría de Grafos</button>
+            <div class="sidebar-divider"></div>
+            <p class="sidebar-subtitle">Conjuntos de Demo</p>
+            <div class="sets-info">
+                <span>A = {1,2,3,4,5}</span>
+                <span>B = {3,4,5,6,7}</span>
+                <span>C = {5,6,7,8,9}</span>
+                <span>U = {1..10}</span>
+            </div>
         </aside>
 
         <!--Panel Central (Entrada y Teclado)-->
         <main class="main-panel">
             <div class="input-section">
-                <h2>SOLVER GENERAL</h2>
-                <input type="text" id="math-input" placeholder="Escribe tu operación (Ej: A ∪ B, p ∧ q)">
-                <button class="solve-btn" style="display:none;">Solver</button>
+                <h2 id="solver-title">SOLVER DE CONJUNTOS</h2>
+                <div class="input-row">
+                    <input type="text" id="math-input" placeholder="Ej: A ∪ B  o  p ∧ ¬q" autocomplete="off" autocorrect="off" spellcheck="false">
+                    <button class="clear-btn" onclick="clearInput()" title="Limpiar">✕</button>
+                </div>
             </div>
 
             <!--Teclado-->
-            <div class="Keyboard">
-                <div class="keyboard">
-                    <!-- Fila 1: Conjuntos y Geometría -->
-                    <button onclick="insertSymbol('∅')">∅</button>
-                    <button onclick="insertSymbol('∪')">∪</button>
-                    <button onclick="insertSymbol('∩')">∩</button>
-                    <button onclick="insertSymbol('\\')">\</button>
-                    <button onclick="insertSymbol('Δ')">Δ</button>
-                    <button onclick="insertSymbol('∇')">∇</button>
+            <div class="keyboard-section">
+                <!-- Teclado de Conjuntos -->
+                <div class="keyboard-panel active-panel" id="panel-conjuntos">
+                    <p class="keyboard-label">Operadores de Conjuntos</p>
+                    <div class="keyboard">
+                        <button class="key-symbol" onclick="insertSymbol('∅')" title="Conjunto vacío">∅</button>
+                        <button class="key-symbol" onclick="insertSymbol('∪')" title="Unión">∪</button>
+                        <button class="key-symbol" onclick="insertSymbol('∩')" title="Intersección">∩</button>
+                        <button class="key-symbol" onclick="insertSymbol('\\')" title="Diferencia">\</button>
+                        <button class="key-symbol" onclick="insertSymbol('Δ')" title="Diferencia simétrica">Δ</button>
+                        <button class="key-symbol" onclick="insertSymbol('⊆')" title="Subconjunto">⊆</button>
 
-                    <!-- Fila 2: Lógica Proposicional -->
-                    <button onclick="insertSymbol('¬')">¬</button>
-                    <button onclick="insertSymbol('∀')">∀</button>
-                    <button onclick="insertSymbol('∃')">∃</button>
-                    <button onclick="insertSymbol('→')">→</button>
-                    <button onclick="insertSymbol('←')">←</button>
-                    <button onclick="insertSymbol('↔')">↔</button>
+                        <button class="key-var" onclick="insertSymbol('A')">A</button>
+                        <button class="key-var" onclick="insertSymbol('B')">B</button>
+                        <button class="key-var" onclick="insertSymbol('C')">C</button>
+                        <button class="key-var" onclick="insertSymbol('U')">U</button>
+                        <button class="key-symbol" onclick="insertSymbol('∈')" title="Pertenece">∈</button>
+                        <button class="key-symbol" onclick="insertSymbol('≠')" title="Diferente">≠</button>
 
-                    <!-- Fila 3: Variables de Conjuntos -->
-                    <button onclick="insertSymbol('A')">A</button>
-                    <button onclick="insertSymbol('B')">B</button>
-                    <button onclick="insertSymbol('C')">C</button>
-                    <button onclick="insertSymbol('p')">p</button>
-                    <button onclick="insertSymbol('q')">q</button>
-                    <button onclick="insertSymbol('r')">r</button>
-
-                    <!-- Fila 4: Agrupación y Relación -->
-                    <button onclick="insertSymbol('≠')">≠</button>
-                    <button onclick="insertSymbol('{')">{</button>
-                    <button onclick="insertSymbol('}')">}</button>
-                    <button onclick="insertSymbol('(')">(</button>
-                    <button onclick="insertSymbol(')')">)</button>
-                    <button onclick="insertSymbol('|')">|</button>
-
-                    <!-- Fila 5: Números y Operadores (Con botones altos) -->
-                    <button onclick="insertSymbol('7')">7</button>
-                    <button onclick="insertSymbol('8')">8</button>
-                    <button onclick="insertSymbol('9')">9</button>
-                    <button onclick="insertSymbol('×')">×</button>
-                    <button class="span-row-2" onclick="insertSymbol('«')">«</button>
-                    <button class="span-row-2" onclick="insertSymbol('»')">»</button>
-
-                    <!-- Fila 6: Números y Operadores -->
-                    <button onclick="insertSymbol('4')">4</button>
-                    <button onclick="insertSymbol('5')">5</button>
-                    <button onclick="insertSymbol('6')">6</button>
-                    <button onclick="insertSymbol('+')">+</button>
-
-                    <!-- Fila 7: Números e Interacción -->
-                    <button onclick="insertSymbol('1')">1</button>
-                    <button onclick="insertSymbol('2')">2</button>
-                    <button onclick="insertSymbol('3')">3</button>
-                    <button onclick="insertSymbol('-')">-</button>
-                    <button onclick="backspace()">⌫</button>
-                    <button onclick="insertSymbol('↵')">↵</button>
-
-                    <!-- Fila 8: Botones Base -->
-                    <button class="span-col-2" onclick="insertSymbol('0')">0</button>
-                    <button onclick="insertSymbol('.')">.</button>
-                    <button onclick="insertSymbol(',')">,</button>
-                    <button class="btn-solver span-col-2" onclick="solveMath()">SOLVER</button>
+                        <button class="key-util" onclick="insertSymbol('(')">（</button>
+                        <button class="key-util" onclick="insertSymbol(')')">）</button>
+                        <button class="key-util" onclick="insertSymbol('{')">&#123;</button>
+                        <button class="key-util" onclick="insertSymbol('}')">&#125;</button>
+                        <button class="key-action backspace-btn" onclick="backspace()">⌫</button>
+                        <button class="key-action solver-btn span-full" onclick="solveMath()">▶ SOLVER</button>
+                    </div>
                 </div>
 
+                <!-- Teclado de Lógica -->
+                <div class="keyboard-panel" id="panel-logica">
+                    <p class="keyboard-label">Operadores Lógicos</p>
+                    <div class="keyboard">
+                        <button class="key-symbol" onclick="insertSymbol('¬')" title="Negación">¬</button>
+                        <button class="key-symbol" onclick="insertSymbol('∧')" title="Conjunción (Y)">∧</button>
+                        <button class="key-symbol" onclick="insertSymbol('∨')" title="Disyunción (O)">∨</button>
+                        <button class="key-symbol" onclick="insertSymbol('→')" title="Implicación">→</button>
+                        <button class="key-symbol" onclick="insertSymbol('↔')" title="Bicondicional">↔</button>
+                        <button class="key-symbol" onclick="insertSymbol('⊕')" title="XOR">⊕</button>
+
+                        <button class="key-var" onclick="insertSymbol('p')">p</button>
+                        <button class="key-var" onclick="insertSymbol('q')">q</button>
+                        <button class="key-var" onclick="insertSymbol('r')">r</button>
+                        <button class="key-var" onclick="insertSymbol('s')">s</button>
+                        <button class="key-symbol" onclick="insertSymbol('∀')" title="Para todo">∀</button>
+                        <button class="key-symbol" onclick="insertSymbol('∃')" title="Existe">∃</button>
+
+                        <button class="key-util" onclick="insertSymbol('(')">（</button>
+                        <button class="key-util" onclick="insertSymbol(')')">）</button>
+                        <button class="key-util" onclick="insertSymbol('V')" title="Verdadero">V</button>
+                        <button class="key-util" onclick="insertSymbol('F')" title="Falso">F</button>
+                        <button class="key-action backspace-btn" onclick="backspace()">⌫</button>
+                        <button class="key-action solver-btn span-full" onclick="solveMath()">▶ SOLVER</button>
+                    </div>
+                </div>
+
+                <!-- Teclado de Combinatoria -->
+                <div class="keyboard-panel" id="panel-combinatoria">
+                    <p class="keyboard-label">Combinatorias (próximamente)</p>
+                    <div class="keyboard">
+                        <button class="key-symbol" onclick="insertSymbol('!')">!</button>
+                        <button class="key-symbol" onclick="insertSymbol('C(')">C(</button>
+                        <button class="key-symbol" onclick="insertSymbol('P(')">P(</button>
+                        <button class="key-symbol" onclick="insertSymbol(',')"> , </button>
+                        <button class="key-util" onclick="insertSymbol('(')">（</button>
+                        <button class="key-util" onclick="insertSymbol(')')">）</button>
+
+                        <button class="key-var" onclick="insertSymbol('n')">n</button>
+                        <button class="key-var" onclick="insertSymbol('k')">k</button>
+                        <button class="key-var" onclick="insertSymbol('r')">r</button>
+                        <button class="key-util" onclick="insertSymbol('7')">7</button>
+                        <button class="key-util" onclick="insertSymbol('8')">8</button>
+                        <button class="key-util" onclick="insertSymbol('9')">9</button>
+
+                        <button class="key-util" onclick="insertSymbol('4')">4</button>
+                        <button class="key-util" onclick="insertSymbol('5')">5</button>
+                        <button class="key-util" onclick="insertSymbol('6')">6</button>
+                        <button class="key-util" onclick="insertSymbol('1')">1</button>
+                        <button class="key-action backspace-btn" onclick="backspace()">⌫</button>
+                        <button class="key-action solver-btn span-full" onclick="solveMath()">▶ SOLVER</button>
+                    </div>
+                </div>
+
+                <!-- Teclado de Grafos -->
+                <div class="keyboard-panel" id="panel-grafos">
+                    <p class="keyboard-label">Teoría de Grafos (próximamente)</p>
+                    <div class="keyboard">
+                        <button class="key-symbol" onclick="insertSymbol('G')">G</button>
+                        <button class="key-symbol" onclick="insertSymbol('V')">V</button>
+                        <button class="key-symbol" onclick="insertSymbol('E')">E</button>
+                        <button class="key-symbol" onclick="insertSymbol('→')">→</button>
+                        <button class="key-symbol" onclick="insertSymbol('↔')">↔</button>
+                        <button class="key-symbol" onclick="insertSymbol('─')">─</button>
+
+                        <button class="key-util" onclick="insertSymbol('(')">（</button>
+                        <button class="key-util" onclick="insertSymbol(')')">）</button>
+                        <button class="key-util" onclick="insertSymbol(',')"> , </button>
+                        <button class="key-var" onclick="insertSymbol('u')">u</button>
+                        <button class="key-var" onclick="insertSymbol('v')">v</button>
+                        <button class="key-var" onclick="insertSymbol('w')">w</button>
+
+                        <button class="key-var" onclick="insertSymbol('1')">1</button>
+                        <button class="key-var" onclick="insertSymbol('2')">2</button>
+                        <button class="key-var" onclick="insertSymbol('3')">3</button>
+                        <button class="key-var" onclick="insertSymbol('4')">4</button>
+                        <button class="key-action backspace-btn" onclick="backspace()">⌫</button>
+                        <button class="key-action solver-btn span-full" onclick="solveMath()">▶ SOLVER</button>
+                    </div>
+                </div>
+            </div>
         </main>
+
         <!-- PANEL DERECHO (Resultados) -->
         <aside class="results-panel">
             <div class="venn-diagram-box">
-                <h3>Visualización (Diagrama de Venn)</h3>
-                <div class="placeholder-diagram" id="diagram-container">
-                    <svg id="venn-svg" width="200" height="150" style="display:none;">
-                        <!-- SVG para diagramas dinámicos -->
-                        <circle cx="70" cy="75" r="45" fill="rgba(102, 252, 241, 0.3)" stroke="#66fcf1" stroke-width="2"/>
-                        <circle cx="130" cy="75" r="45" fill="rgba(69, 162, 71, 0.3)" stroke="#45a247" stroke-width="2"/>
-                        <text x="50" y="75" fill="#fff" font-size="14">A</text>
-                        <text x="140" y="75" fill="#fff" font-size="14">B</text>
+                <h3>Visualización</h3>
+                <div class="diagram-container" id="diagram-container">
+                    <svg id="venn-svg" width="300" height="220" viewBox="0 0 300 220">
+                        <text x="150" y="110" fill="#666" font-size="13" text-anchor="middle">Ingresa una expresión</text>
+                        <text x="150" y="128" fill="#666" font-size="11" text-anchor="middle">para ver el diagrama</text>
                     </svg>
-                    <span id="diagram-text">Esperando expresión...</span>
                 </div>
+                <div id="diagram-legend" class="diagram-legend"></div>
             </div>
             <div class="steps-box">
-                <h3>Solución Paso a Paso:</h3>
-                <ul id="solution-steps">
-                    <li>Esperando expresión...</li>
-                </ul>
+                <h3>Solución Paso a Paso</h3>
+                <div id="solution-steps" class="steps-container">
+                    <p class="steps-placeholder">Esperando expresión...</p>
+                </div>
             </div>
         </aside>
+
     </div>
 
     <!-- Contenedor de notificaciones -->
     <div id="toast-container"></div>
 
     <script>
-        function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
+    // ─────────────────────────────────────────
+    // Navegación de la barra lateral
+    // ─────────────────────────────────────────
+    const titulos = {
+        conjuntos: 'SOLVER DE CONJUNTOS',
+        logica: 'SOLVER DE LÓGICA PROPOSICIONAL',
+        combinatoria: 'SOLVER DE COMBINATORIAS',
+        grafos: 'SOLVER DE GRAFOS'
+    };
 
-        // Sidebar logic
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-            });
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const mode = e.target.dataset.mode;
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+
+            document.querySelectorAll('.keyboard-panel').forEach(p => p.classList.remove('active-panel'));
+            document.getElementById('panel-' + mode).classList.add('active-panel');
+
+            document.getElementById('solver-title').textContent = titulos[mode] || 'SOLVER';
         });
+    });
 
-        // Función para insertar símbolos
-        function insertSymbol(symbol) {
-            const inputField = document.getElementById('math-input');
-            inputField.value += symbol;
-            inputField.focus();
+    // ─────────────────────────────────────────
+    // Inserción EN LA POSICIÓN DEL CURSOR
+    // ─────────────────────────────────────────
+    function insertSymbol(symbol) {
+        const input = document.getElementById('math-input');
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        const before = input.value.substring(0, start);
+        const after = input.value.substring(end);
+        input.value = before + symbol + after;
+
+        // Restaurar posición del cursor después del símbolo insertado
+        const newPos = start + symbol.length;
+        input.focus();
+        input.setSelectionRange(newPos, newPos);
+    }
+
+    function backspace() {
+        const input = document.getElementById('math-input');
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+
+        if (start !== end) {
+            // Hay selección, borra la selección
+            const before = input.value.substring(0, start);
+            const after = input.value.substring(end);
+            input.value = before + after;
+            input.focus();
+            input.setSelectionRange(start, start);
+        } else if (start > 0) {
+            // Sin selección, borra el carácter anterior
+            const before = input.value.substring(0, start - 1);
+            const after = input.value.substring(start);
+            input.value = before + after;
+            input.focus();
+            input.setSelectionRange(start - 1, start - 1);
+        }
+    }
+
+    function clearInput() {
+        const input = document.getElementById('math-input');
+        input.value = '';
+        input.focus();
+        clearResults();
+    }
+
+    function clearResults() {
+        document.getElementById('solution-steps').innerHTML = '<p class="steps-placeholder">Esperando expresión...</p>';
+        document.getElementById('diagram-legend').innerHTML = '';
+        renderEmptyVenn();
+    }
+
+    // ─────────────────────────────────────────
+    // Toast Notifications
+    // ─────────────────────────────────────────
+    function showToast(message, type = 'error') {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-' + type;
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3500);
+    }
+
+    // ─────────────────────────────────────────
+    // SOLVER principal
+    // ─────────────────────────────────────────
+    function solveMath() {
+        const expresion = document.getElementById('math-input').value.trim();
+        const stepsContainer = document.getElementById('solution-steps');
+
+        if (!expresion) {
+            showToast('Por favor, ingresa una expresión.');
+            return;
         }
 
-        // Función para borrar el último carácter (botón ⌫)
-        function backspace() {
-            const inputField = document.getElementById('math-input');
-            inputField.value = inputField.value.slice(0, -1);
-            inputField.focus();
-        }
+        stepsContainer.innerHTML = '<div class="loading"><span></span><span></span><span></span></div>';
 
-        // Función para enviar a Python
-        function solveMath() {
-            const expresion = document.getElementById('math-input').value;
-            const listSteps = document.getElementById('solution-steps');
-            
-            if (!expresion.trim()) {
-                showToast("Por favor, ingresa una expresión.");
+        fetch('/resolver', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ expresion })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                showToast(data.error);
+                stepsContainer.innerHTML = `<p class="steps-error">❌ ${data.error}</p>`;
+                renderEmptyVenn();
                 return;
             }
 
-            listSteps.innerHTML = "<li>Procesando...</li>";
-            document.getElementById('venn-svg').style.display = 'block';
-            document.getElementById('diagram-text').style.display = 'none';
+            // Renderizar pasos
+            renderSteps(data.pasos_solucion || []);
 
-            fetch('/resolver', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ expresion: expresion })
-            })
-            .then(response => response.json())
-            .then(data => {
-                listSteps.innerHTML = "";
-                if (data.error) {
-                    showToast(data.error);
-                    listSteps.innerHTML = `<li>Error al evaluar.</li>`;
-                } else if (data.pasos_solucion) {
-                    data.pasos_solucion.forEach(paso => {
-                        const li = document.createElement("li");
-                        li.textContent = paso;
-                        listSteps.appendChild(li);
-                    });
-                } else {
-                    listSteps.innerHTML = `<li>${data.mensaje}</li>`;
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                showToast("Error al conectar con el servidor.");
-                listSteps.innerHTML = "<li>Error de conexión.</li>";
-            });
+            // Renderizar diagrama de Venn
+            if (data.venn_data) {
+                renderVenn(data.venn_data);
+            } else if (data.tipo_problema === 'Lógica') {
+                renderLogicIcon();
+            } else {
+                renderEmptyVenn();
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            showToast('Error al conectar con el servidor.');
+            stepsContainer.innerHTML = '<p class="steps-error">❌ Error de conexión.</p>';
+        });
+    }
+
+    // Enter para resolver
+    document.getElementById('math-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') solveMath();
+    });
+
+    // ─────────────────────────────────────────
+    // Renderizado de PASOS
+    // ─────────────────────────────────────────
+    function renderSteps(pasos) {
+        const container = document.getElementById('solution-steps');
+        container.innerHTML = '';
+        pasos.forEach((paso, i) => {
+            const div = document.createElement('div');
+            div.className = 'step-item';
+            div.style.animationDelay = (i * 0.06) + 's';
+
+            // Detectar si es línea separadora
+            if (paso.startsWith('─')) {
+                div.className = 'step-separator';
+                div.innerHTML = '<hr>';
+            } else {
+                div.textContent = paso;
+            }
+
+            container.appendChild(div);
+        });
+    }
+
+    // ─────────────────────────────────────────
+    // Renderizado del DIAGRAMA DE VENN (SVG)
+    // ─────────────────────────────────────────
+    const svg = document.getElementById('venn-svg');
+
+    function renderEmptyVenn() {
+        svg.innerHTML = `
+            <text x="150" y="110" fill="#666" font-size="13" text-anchor="middle">Ingresa una expresión</text>
+            <text x="150" y="128" fill="#666" font-size="11" text-anchor="middle">para ver el diagrama</text>`;
+        document.getElementById('diagram-legend').innerHTML = '';
+    }
+
+    function renderLogicIcon() {
+        svg.innerHTML = `
+            <text x="150" y="90" fill="#66fcf1" font-size="40" text-anchor="middle">🔀</text>
+            <text x="150" y="130" fill="#c5c6c7" font-size="13" text-anchor="middle">Tabla de Verdad</text>
+            <text x="150" y="148" fill="#c5c6c7" font-size="11" text-anchor="middle">Ver pasos →</text>`;
+        document.getElementById('diagram-legend').innerHTML = '';
+    }
+
+    function renderVenn(data) {
+        svg.innerHTML = '';
+        document.getElementById('diagram-legend').innerHTML = '';
+
+        if (data.tipo === 'venn2') {
+            renderVenn2(data);
+        } else if (data.tipo === 'venn3') {
+            renderVenn3(data);
         }
-    </script>
-</body>
+    }
 
+    function getHighlightRegions(operacion) {
+        // Determinar qué regiones colorear según la operación
+        if (operacion.includes('∪')) return ['solo_a', 'interseccion', 'solo_b'];
+        if (operacion.includes('∩')) return ['interseccion'];
+        if (operacion.includes('\\')) return ['solo_a'];
+        if (operacion.includes('Δ') || operacion.includes('∇')) return ['solo_a', 'solo_b'];
+        return ['solo_a', 'interseccion', 'solo_b'];
+    }
+
+    function renderVenn2(data) {
+        const W = 300, H = 220;
+        const cx1 = 110, cx2 = 190, cy = 110, r = 70;
+        const highlight = getHighlightRegions(data.operacion);
+
+        const isSoloA = highlight.includes('solo_a');
+        const isInter = highlight.includes('interseccion');
+        const isSoloB = highlight.includes('solo_b');
+
+        // Defs para clip y filter
+        const defs = `<defs>
+            <clipPath id="clipA"><circle cx="${cx1}" cy="${cy}" r="${r}"/></clipPath>
+            <clipPath id="clipB"><circle cx="${cx2}" cy="${cy}" r="${r}"/></clipPath>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>`;
+        svg.innerHTML = defs;
+
+        // Fondo de conjuntos
+        svg.innerHTML += `
+            <circle cx="${cx1}" cy="${cy}" r="${r}" fill="${isSoloA ? 'rgba(102,252,241,0.25)' : 'rgba(102,252,241,0.07)'}" stroke="#66fcf1" stroke-width="2"/>
+            <circle cx="${cx2}" cy="${cy}" r="${r}" fill="${isSoloB ? 'rgba(69,162,71,0.25)' : 'rgba(69,162,71,0.07)'}" stroke="#45a247" stroke-width="2"/>`;
+
+        // Intersección resaltada
+        if (isInter) {
+            svg.innerHTML += `
+                <path d="${intersectionPath(cx1, cy, cx2, cy, r)}" fill="rgba(255,210,80,0.4)" stroke="rgba(255,210,80,0.8)" stroke-width="1.5"/>`;
+        }
+
+        // Etiquetas principales
+        svg.innerHTML += `
+            <text x="${cx1 - 30}" y="${cy - r + 18}" fill="#66fcf1" font-size="16" font-weight="bold" text-anchor="middle" filter="url(#glow)">${data.labels[0]}</text>
+            <text x="${cx2 + 30}" y="${cy - r + 18}" fill="#45a247" font-size="16" font-weight="bold" text-anchor="middle" filter="url(#glow)">${data.labels[1]}</text>`;
+
+        // Valores dentro de cada región
+        const soloAStr = data.solo_a.length ? data.solo_a.slice(0,4).join(',') + (data.solo_a.length > 4 ? '...' : '') : '∅';
+        const interStr = data.interseccion.length ? data.interseccion.slice(0,3).join(',') + (data.interseccion.length > 3 ? '...' : '') : '∅';
+        const soloBStr = data.solo_b.length ? data.solo_b.slice(0,4).join(',') + (data.solo_b.length > 4 ? '...' : '') : '∅';
+
+        svg.innerHTML += `
+            <text x="${cx1 - 38}" y="${cy + 5}" fill="#ccc" font-size="11" text-anchor="middle">{${soloAStr}}</text>
+            <text x="150" y="${cy + 5}" fill="#fff" font-size="10" text-anchor="middle">{${interStr}}</text>
+            <text x="${cx2 + 38}" y="${cy + 5}" fill="#ccc" font-size="11" text-anchor="middle">{${soloBStr}}</text>`;
+
+        // Leyenda
+        const legend = document.getElementById('diagram-legend');
+        legend.innerHTML = `
+            <span class="legend-item"><span class="legend-dot" style="background:#66fcf1"></span> ${data.labels[0]}: {${data.solo_a.join(',')}}</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#ffd250"></span> ${data.labels[0]}∩${data.labels[1]}: {${data.interseccion.join(',')}}</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#45a247"></span> ${data.labels[1]}: {${data.solo_b.join(',')}}</span>
+            <span class="legend-result">Resultado: {${data.resultado.join(', ')}}</span>`;
+    }
+
+    function renderVenn3(data) {
+        const W = 300, H = 220;
+        const cx1 = 105, cy1 = 90, cx2 = 195, cy2 = 90, cx3 = 150, cy3 = 165, r = 65;
+
+        const defs = `<defs>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>`;
+        svg.innerHTML = defs;
+
+        svg.innerHTML += `
+            <circle cx="${cx1}" cy="${cy1}" r="${r}" fill="rgba(102,252,241,0.12)" stroke="#66fcf1" stroke-width="2"/>
+            <circle cx="${cx2}" cy="${cy2}" r="${r}" fill="rgba(69,162,71,0.12)" stroke="#45a247" stroke-width="2"/>
+            <circle cx="${cx3}" cy="${cy3}" r="${r}" fill="rgba(255,120,100,0.12)" stroke="#ff7864" stroke-width="2"/>
+            <text x="${cx1 - 35}" y="${cy1 - 50}" fill="#66fcf1" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[0]}</text>
+            <text x="${cx2 + 20}" y="${cy2 - 50}" fill="#45a247" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[1]}</text>
+            <text x="${cx3 + 30}" y="${cy3 + 55}" fill="#ff7864" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[2]}</text>`;
+
+        // Valores en cada región
+        const regions = [
+            { text: data.solo_a, x: cx1 - 30, y: cy1 - 5 },
+            { text: data.solo_b, x: cx2 + 30, y: cy2 - 5 },
+            { text: data.solo_c, x: cx3, y: cy3 + 35 },
+            { text: data.a_b, x: 150, y: 78 },
+            { text: data.a_c, x: cx1 + 15, y: cy3 - 5 },
+            { text: data.b_c, x: cx2 - 15, y: cy3 - 5 },
+            { text: data.a_b_c, x: 150, y: 140 },
+        ];
+
+        regions.forEach(reg => {
+            if (reg.text.length > 0) {
+                svg.innerHTML += `<text x="${reg.x}" y="${reg.y}" fill="#ddd" font-size="10" text-anchor="middle">{${reg.text.slice(0,3).join(',')}}</text>`;
+            }
+        });
+
+        const legend = document.getElementById('diagram-legend');
+        legend.innerHTML = `<span class="legend-result">Resultado: {${data.resultado.join(', ')}}</span>`;
+    }
+
+    // Calcula el path SVG de la intersección de dos círculos del mismo radio
+    function intersectionPath(cx1, cy1, cx2, cy2, r) {
+        const d = Math.sqrt((cx2 - cx1) ** 2 + (cy2 - cy1) ** 2);
+        const a = (r * r - r * r + d * d) / (2 * d);
+        const h = Math.sqrt(r * r - a * a);
+        const mx = cx1 + a * (cx2 - cx1) / d;
+        const my = cy1 + a * (cy2 - cy1) / d;
+        const ix1 = mx + h * (cy2 - cy1) / d;
+        const iy1 = my - h * (cx2 - cx1) / d;
+        const ix2 = mx - h * (cy2 - cy1) / d;
+        const iy2 = my + h * (cx2 - cx1) / d;
+        return `M ${ix1} ${iy1} A ${r} ${r} 0 0 1 ${ix2} ${iy2} A ${r} ${r} 0 0 1 ${ix1} ${iy1} Z`;
+    }
+    </script>
+
+</body>
 </html>
