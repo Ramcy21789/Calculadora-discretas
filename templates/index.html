@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Matemáticas Discretas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Calculadora de Matemáticas Discretas</h1>
+    </header>
+    <div class="app-container">
+        <!--Barra Lateral-->
+        <aside class="sidebar">
+            <button class="nav-btn active">Teoría de Conjuntos</button>
+            <button class="nav-btn">Lógica Proposicional</button>
+            <button class="nav-btn">Combinatorias</button>
+            <button class="nav-btn">Teoría de Grafos</button>
+        </aside>
+
+        <!--Panel Central (Entrada y Teclado)-->
+        <main class="main-panel">
+            <div class="input-section">
+                <h2>SOLVER DE CONJUNTOS</h2>
+                <Input type="text" id="math-input" placeholder="Escribe tu operacion">
+                <button class="solve-btn">Solver</button>
+            </div>
+
+            <!--Teclado-->
+            <div class="Keyboard">
+                <div class="keyboard">
+                    <!-- Fila 1: Conjuntos y Geometría -->
+                    <button onclick="insertSymbol('∅')">∅</button>
+                    <button onclick="insertSymbol('∪')">∪</button>
+                    <button onclick="insertSymbol('∩')">∩</button>
+                    <button onclick="insertSymbol('\\')">\</button>
+                    <button onclick="insertSymbol('Δ')">Δ</button>
+                    <button onclick="insertSymbol('∇')">∇</button>
+
+                    <!-- Fila 2: Lógica Proposicional -->
+                    <button onclick="insertSymbol('¬')">¬</button>
+                    <button onclick="insertSymbol('∀')">∀</button>
+                    <button onclick="insertSymbol('∃')">∃</button>
+                    <button onclick="insertSymbol('→')">→</button>
+                    <button onclick="insertSymbol('←')">←</button>
+                    <button onclick="insertSymbol('↔')">↔</button>
+
+                    <!-- Fila 3: Variables de Conjuntos -->
+                    <button onclick="insertSymbol('A')">A</button>
+                    <button onclick="insertSymbol('B')">B</button>
+                    <button onclick="insertSymbol('C')">C</button>
+                    <button onclick="insertSymbol('U')">U</button>
+                    <button onclick="insertSymbol('⊆')">⊆</button>
+                    <button onclick="insertSymbol('∈')">∈</button>
+
+                    <!-- Fila 4: Agrupación y Relación -->
+                    <button onclick="insertSymbol('≠')">≠</button>
+                    <button onclick="insertSymbol('{')">{</button>
+                    <button onclick="insertSymbol('}')">}</button>
+                    <button onclick="insertSymbol('(')">(</button>
+                    <button onclick="insertSymbol(')')">)</button>
+                    <button onclick="insertSymbol('|')">|</button>
+
+                    <!-- Fila 5: Números y Operadores (Con botones altos) -->
+                    <button onclick="insertSymbol('7')">7</button>
+                    <button onclick="insertSymbol('8')">8</button>
+                    <button onclick="insertSymbol('9')">9</button>
+                    <button onclick="insertSymbol('×')">×</button>
+                    <button class="span-row-2" onclick="insertSymbol('«')">«</button>
+                    <button class="span-row-2" onclick="insertSymbol('»')">»</button>
+
+                    <!-- Fila 6: Números y Operadores (El grid acomoda los huecos automáticamente) -->
+                    <button onclick="insertSymbol('4')">4</button>
+                    <button onclick="insertSymbol('5')">5</button>
+                    <button onclick="insertSymbol('6')">6</button>
+                    <button onclick="insertSymbol('+')">+</button>
+
+                    <!-- Fila 7: Números e Interacción -->
+                    <button onclick="insertSymbol('1')">1</button>
+                    <button onclick="insertSymbol('2')">2</button>
+                    <button onclick="insertSymbol('3')">3</button>
+                    <button onclick="insertSymbol('-')">-</button>
+                    <button onclick="backspace()">⌫</button>
+                    <button onclick="insertSymbol('↵')">↵</button>
+
+                    <!-- Fila 8: Botones Base -->
+                    <button class="span-col-2" onclick="insertSymbol('0')">0</button>
+                    <button onclick="insertSymbol('.')">.</button>
+                    <button onclick="insertSymbol(',')">,</button>
+                    <button class="btn-solver span-col-2" onclick="solveMath()">SOLVER</button>
+                </div>
+
+        </main>
+        <!-- PANEL DERECHO (Resultados) -->
+        <aside class="results-panel">
+            <div class="venn-diagram-box">
+                <h3>Visualización de Diagrama de Venn</h3>
+                <div class="placeholder-diagram">
+                    <!-- Aquí irá el gráfico generado por JS más adelante -->
+                    [Área del Diagrama]
+                </div>
+            </div>
+            <div class="steps-box">
+                <h3>Solución Paso a Paso:</h3>
+                <ul id="solution-steps">
+                    <!-- Aquí inyectaremos los pasos desde Python -->
+                    <li>Esperando expresión...</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Script sencillo para que el teclado funcione -->
+    <script>
+        function insertSymbol(symbol) {
+            const inputField = document.getElementById('math-input');
+            inputField.value += symbol;
+            inputField.focus();
+        }
+    </script>
+    <script>
+        // Función para insertar símbolos
+        function insertSymbol(symbol) {
+            const inputField = document.getElementById('math-input');
+            inputField.value += symbol;
+            inputField.focus();
+        }
+
+        // Función para borrar el último carácter (botón ⌫)
+        function backspace() {
+            const inputField = document.getElementById('math-input');
+            inputField.value = inputField.value.slice(0, -1);
+            inputField.focus();
+        }
+
+        // Función para enviar a Python
+        function solveMath() {
+            const expresion = document.getElementById('math-input').value;
+            const listSteps = document.getElementById('solution-steps');
+            
+            if (!expresion.trim()) {
+                alert("Por favor, ingresa una expresión.");
+                return;
+            }
+
+            listSteps.innerHTML = "<li>Procesando...</li>";
+
+            fetch('/resolver', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ expresion: expresion })
+            })
+            .then(response => response.json())
+            .then(data => {
+                listSteps.innerHTML = "";
+                if (data.error) {
+                    listSteps.innerHTML = `<li>Error: ${data.error}</li>`;
+                } else if (data.pasos_solucion) {
+                    data.pasos_solucion.forEach(paso => {
+                        const li = document.createElement("li");
+                        li.textContent = paso;
+                        listSteps.appendChild(li);
+                    });
+                } else {
+                    listSteps.innerHTML = `<li>${data.mensaje}</li>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                listSteps.innerHTML = "<li>Error al conectar con el servidor.</li>";
+            });
+        }
+    </script>
+
+</body>
+
+</html>
