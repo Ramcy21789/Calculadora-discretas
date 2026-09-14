@@ -1,4 +1,5 @@
 import re
+import random
 
 # Conjuntos universales de ejemplo para demostración
 CONJUNTOS_DEMO = {
@@ -8,11 +9,42 @@ CONJUNTOS_DEMO = {
     'U': {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 }
 
+def random_sets():
+    """Genera 3 conjuntos aleatorios y su universo."""
+    # Usaremos números del 1 al 15
+    pool = list(range(1, 16))
+    
+    set_a = set(random.sample(pool, random.randint(3, 7)))
+    set_b = set(random.sample(pool, random.randint(3, 7)))
+    set_c = set(random.sample(pool, random.randint(3, 7)))
+    
+    # Universo es la unión más algunos elementos extra aleatorios
+    universo = set_a | set_b | set_c
+    extra = set(random.sample(pool, random.randint(2, 5)))
+    universo = universo | extra
+
+    return {
+        'A': sorted(list(set_a)),
+        'B': sorted(list(set_b)),
+        'C': sorted(list(set_c)),
+        'U': sorted(list(universo))
+    }
+
 class SetParser:
-    def __init__(self):
+    def __init__(self, custom_sets=None):
         # Operadores de conjuntos soportados
         self.operators = ['∪', '∩', '\\', 'Δ', '∇', '⊆', '∈']
-        self.conjuntos = dict(CONJUNTOS_DEMO)
+        if custom_sets:
+            # Convert arrays to sets
+            self.conjuntos = {k: set(v) for k, v in custom_sets.items()}
+            if 'U' not in self.conjuntos:
+                # Calculate universal set if missing
+                u = set()
+                for k, v in self.conjuntos.items():
+                    u = u | v
+                self.conjuntos['U'] = u
+        else:
+            self.conjuntos = {k: set(v) for k, v in CONJUNTOS_DEMO.items()}
 
     def is_set_expression(self, expression):
         for op in self.operators:

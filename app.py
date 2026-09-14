@@ -3,7 +3,7 @@ import json
 import threading
 import webbrowser
 from core.logic_parser import LogicParser
-from core.set_parser import SetParser
+from core.set_parser import SetParser, random_sets
 
 # Iniciamos flask
 app = Flask(__name__)
@@ -54,6 +54,13 @@ def inicio():
     return render_template('index.html')
 
 # ─────────────────────────────────────────────
+# Endpoint: conjuntos aleatorios
+# ─────────────────────────────────────────────
+@app.route('/conjuntos-aleatorios', methods=['GET'])
+def get_conjuntos_aleatorios():
+    return jsonify(random_sets())
+
+# ─────────────────────────────────────────────
 # Ruta 3: Resolver expresión matemática
 # ─────────────────────────────────────────────
 @app.route('/resolver', methods=['POST'])
@@ -61,6 +68,7 @@ def resolver_expresion():
     try:
         datos = request.json
         expresion = datos.get('expresion', '').strip()
+        custom_sets = datos.get('conjuntos', None)   # Dict opcional del frontend
 
         if not expresion:
             return jsonify({"error": "No se recibió ninguna expresión"}), 400
@@ -68,7 +76,7 @@ def resolver_expresion():
         expresion_limpia = expresion.replace(" ", "")
 
         logic_parser = LogicParser()
-        set_parser = SetParser()
+        set_parser = SetParser(custom_sets=custom_sets)
 
         pasos = []
         venn_data = None
