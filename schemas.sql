@@ -1,6 +1,6 @@
 -- 1. Tabla de usuarios
 CREATE TABLE usuarios (
-    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
     nombres VARCHAR(50),
     apellidos VARCHAR(50),
     email VARCHAR(100),
@@ -10,7 +10,7 @@ CREATE TABLE usuarios (
 
 -- 2. Tabla de tareas
 CREATE TABLE tareas (
-    id_tarea INT PRIMARY KEY AUTO_INCREMENT,
+    id_tarea INTEGER PRIMARY KEY AUTOINCREMENT,
     titulo VARCHAR(100),
     descripcion VARCHAR(255),
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -28,12 +28,12 @@ CREATE TABLE tipos_problemas (
 
 -- 4. Tabla de historial de escaneos y análisis
 CREATE TABLE historial_escaneos (
-    id_escaneo INT PRIMARY KEY AUTO_INCREMENT,
+    id_escaneo INTEGER PRIMARY KEY AUTOINCREMENT,
     id_tarea INT,
     tipo_problema VARCHAR(50) NOT NULL,
     expresion_original TEXT NOT NULL,
     fecha_escaneo TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    resultado_json JSON,
+    resultado_json TEXT,
     FOREIGN KEY (id_tarea) REFERENCES tareas(id_tarea),
     FOREIGN KEY (tipo_problema) REFERENCES tipos_problemas(tipo_problema)
 );

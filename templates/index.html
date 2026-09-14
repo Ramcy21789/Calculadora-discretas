@@ -20,11 +20,11 @@
         <!--Barra Lateral-->
         <aside class="sidebar">
             <p class="sidebar-title">Módulos</p>
-            <button class="nav-btn active" data-mode="conjuntos">🔵 Teoría de Conjuntos</button>
-            <button class="nav-btn" data-mode="logica">🔀 Lógica Proposicional</button>
-            <button class="nav-btn" data-mode="combinatoria">🔢 Combinatorias</button>
-            <button class="nav-btn" data-mode="grafos">🕸️ Teoría de Grafos</button>
-            
+            <button class="nav-btn active" data-mode="conjuntos">Teoría de Conjuntos</button>
+            <button class="nav-btn" data-mode="logica">Lógica Proposicional</button>
+            <button class="nav-btn" data-mode="combinatoria">Combinatorias</button>
+            <button class="nav-btn" data-mode="grafos">Teoría de Grafos</button>
+
             <div class="sidebar-divider"></div>
             <p class="sidebar-subtitle">Datos Actuales</p>
             <div class="sets-info" id="sidebar-sets-info">
@@ -41,11 +41,12 @@
                         <!-- Instrucciones dinámicas -->
                     </p>
                 </div>
-                
+
                 <!-- Panel UI para Conjuntos (oculto en otros módulos) -->
                 <div id="custom-sets-ui" class="custom-sets-ui">
                     <div class="custom-sets-controls">
-                        <button class="secondary-btn" onclick="generateRandomSets()">🎲 Generar Conjuntos Aleatorios</button>
+                        <button class="secondary-btn" onclick="generateRandomSets()">Generar Conjuntos
+                            Aleatorios</button>
                     </div>
                     <div class="custom-sets-inputs">
                         <label>A = { <input type="text" id="set-a-input" value="1,2,3,4,5"> }</label>
@@ -57,7 +58,8 @@
                 </div>
 
                 <div class="input-row">
-                    <input type="text" id="math-input" placeholder="Ej: A ∪ B" autocomplete="off" autocorrect="off" spellcheck="false">
+                    <input type="text" id="math-input" placeholder="Ej: A ∪ B" autocomplete="off" autocorrect="off"
+                        spellcheck="false">
                     <button class="clear-btn" onclick="clearInput()" title="Limpiar">✕</button>
                 </div>
             </div>
@@ -132,9 +134,9 @@
                         <button class="key-var" onclick="insertSymbol('n')">n</button>
                         <button class="key-var" onclick="insertSymbol('k')">k</button>
                         <button class="key-var" onclick="insertSymbol('r')">r</button>
-                        <button class="key-util" onclick="insertSymbol('7')">7</button>
-                        <button class="key-util" onclick="insertSymbol('8')">8</button>
-                        <button class="key-util" onclick="insertSymbol('9')">9</button>
+                        <button class="key-util" onclick="insertSymbol('1')">1</button>
+                        <button class="key-util" onclick="insertSymbol('2')">2</button>
+                        <button class="key-util" onclick="insertSymbol('3')">3</button>
 
                         <button class="key-util empty-space"></button>
                         <button class="key-util empty-space"></button>
@@ -142,6 +144,19 @@
                         <button class="key-util" onclick="insertSymbol('4')">4</button>
                         <button class="key-util" onclick="insertSymbol('5')">5</button>
                         <button class="key-util" onclick="insertSymbol('6')">6</button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util" onclick="insertSymbol('7')">7</button>
+                        <button class="key-util" onclick="insertSymbol('8')">8</button>
+                        <button class="key-util" onclick="insertSymbol('9')">9</button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util empty-space"></button>
+                        <button class="key-util" onclick="insertSymbol('0')">0</button>
+                        <button class="key-util empty-space"></button>
+
                     </div>
                 </div>
 
@@ -167,8 +182,9 @@
 
                 <!-- Botones Globales (Fijos para todos los paneles) -->
                 <div class="global-actions">
-                    <button class="key-action backspace-btn" onclick="backspace()" title="Borrar un carácter">⌫ BORRAR</button>
-                    <button class="key-action solver-btn" onclick="solveMath()">▶ SOLUCIONAR</button>
+                    <button class="key-action backspace-btn" onclick="backspace()" title="Borrar un carácter">⌫
+                        BORRAR</button>
+                    <button class="key-action solver-btn" onclick="solveMath()">SOLUCIONAR</button>
                 </div>
             </div>
         </main>
@@ -179,8 +195,10 @@
                 <h3>Visualización</h3>
                 <div class="diagram-container" id="diagram-container">
                     <svg id="venn-svg" width="300" height="220" viewBox="0 0 300 220">
-                        <text x="150" y="110" fill="#666" font-size="13" text-anchor="middle">Ingresa una expresión</text>
-                        <text x="150" y="128" fill="#666" font-size="11" text-anchor="middle">para ver el diagrama</text>
+                        <text x="150" y="110" fill="#666" font-size="13" text-anchor="middle">Ingresa una
+                            expresión</text>
+                        <text x="150" y="128" fill="#666" font-size="11" text-anchor="middle">para ver el
+                            diagrama</text>
                     </svg>
                 </div>
                 <div id="diagram-legend" class="diagram-legend"></div>
@@ -199,431 +217,432 @@
     <div id="toast-container"></div>
 
     <script>
-    // ─────────────────────────────────────────
-    // Datos y Estado
-    // ─────────────────────────────────────────
-    let currentMode = 'conjuntos';
-    let userCustomSets = {
-        'A': [1,2,3,4,5],
-        'B': [3,4,5,6,7],
-        'C': [5,6,7,8,9],
-        'U': [1,2,3,4,5,6,7,8,9,10]
-    };
+        // ─────────────────────────────────────────
+        // Datos y Estado
+        // ─────────────────────────────────────────
+        let currentMode = 'conjuntos';
+        let userCustomSets = {
+            'A': [1, 2, 3, 4, 5],
+            'B': [3, 4, 5, 6, 7],
+            'C': [5, 6, 7, 8, 9],
+            'U': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        };
 
-    const modulesInfo = {
-        conjuntos: {
-            title: 'SOLVER DE CONJUNTOS',
-            instruction: 'Ingresa operaciones como <code>A ∪ (B ∩ C)</code>. Puedes personalizar los valores numéricos de los conjuntos usando el panel inferior.',
-            placeholder: 'Ej: A ∪ B  o  C \\ (A ∩ B)'
-        },
-        logica: {
-            title: 'SOLVER DE LÓGICA PROPOSICIONAL',
-            instruction: 'Utiliza variables (p, q, r) y operadores (∧, ∨, →, ↔). El motor identificará reglas de inferencia como <b>Modus Ponens</b> o <b>Leyes de De Morgan</b> en el paso a paso.',
-            placeholder: 'Ej: (p → q) ∧ p  o  ¬(p ∨ q)'
-        },
-        combinatoria: {
-            title: 'SOLVER DE COMBINATORIAS',
-            instruction: 'Calcula permutaciones P(n,k) o combinaciones C(n,k). (Próximamente disponible).',
-            placeholder: 'Ej: C(5,2)'
-        },
-        grafos: {
-            title: 'SOLVER DE GRAFOS',
-            instruction: 'Establece relaciones entre vértices para calcular rutas. (Próximamente disponible).',
-            placeholder: 'Ej: V={1,2,3}, E={(1,2)}'
+        const modulesInfo = {
+            conjuntos: {
+                title: 'SOLVER DE CONJUNTOS',
+                instruction: 'Ingresa operaciones como <code>A ∪ (B ∩ C)</code>. Puedes personalizar los valores numéricos de los conjuntos usando el panel inferior.',
+                placeholder: 'Ej: A ∪ B  o  C \\ (A ∩ B)'
+            },
+            logica: {
+                title: 'SOLVER DE LÓGICA PROPOSICIONAL',
+                instruction: 'Utiliza variables (p, q, r) y operadores (∧, ∨, →, ↔). El motor identificará reglas de inferencia como <b>Modus Ponens</b> o <b>Leyes de De Morgan</b> en el paso a paso.',
+                placeholder: 'Ej: (p → q) ∧ p  o  ¬(p ∨ q)'
+            },
+            combinatoria: {
+                title: 'SOLVER DE COMBINATORIAS',
+                instruction: 'Calcula permutaciones P(n,k) o combinaciones C(n,k). (Próximamente disponible).',
+                placeholder: 'Ej: C(5,2)'
+            },
+            grafos: {
+                title: 'SOLVER DE GRAFOS',
+                instruction: 'Establece relaciones entre vértices para calcular rutas. (Próximamente disponible).',
+                placeholder: 'Ej: V={1,2,3}, E={(1,2)}'
+            }
+        };
+
+        // ─────────────────────────────────────────
+        // Inicialización y Navegación
+        // ─────────────────────────────────────────
+        function init() {
+            updateSidebarSets();
+            changeModule('conjuntos');
         }
-    };
 
-    // ─────────────────────────────────────────
-    // Inicialización y Navegación
-    // ─────────────────────────────────────────
-    function init() {
-        updateSidebarSets();
-        changeModule('conjuntos');
-    }
-
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const mode = e.target.dataset.mode;
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            changeModule(mode);
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const mode = e.target.dataset.mode;
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                changeModule(mode);
+            });
         });
-    });
 
-    function changeModule(mode) {
-        currentMode = mode;
-        const info = modulesInfo[mode];
-        
-        // Cambiar panel de teclado
-        document.querySelectorAll('.keyboard-panel').forEach(p => p.classList.remove('active-panel'));
-        document.getElementById('panel-' + mode).classList.add('active-panel');
+        function changeModule(mode) {
+            currentMode = mode;
+            const info = modulesInfo[mode];
 
-        // Actualizar textos
-        document.getElementById('solver-title').textContent = info.title;
-        document.getElementById('module-instructions').innerHTML = info.instruction;
-        document.getElementById('math-input').placeholder = info.placeholder;
+            // Cambiar panel de teclado
+            document.querySelectorAll('.keyboard-panel').forEach(p => p.classList.remove('active-panel'));
+            document.getElementById('panel-' + mode).classList.add('active-panel');
 
-        // Mostrar/Ocultar UI de Custom Sets
-        const customSetsUI = document.getElementById('custom-sets-ui');
-        customSetsUI.style.display = (mode === 'conjuntos') ? 'flex' : 'none';
-        
-        clearResults();
-    }
+            // Actualizar textos
+            document.getElementById('solver-title').textContent = info.title;
+            document.getElementById('module-instructions').innerHTML = info.instruction;
+            document.getElementById('math-input').placeholder = info.placeholder;
 
-    // ─────────────────────────────────────────
-    // Gestión de Conjuntos (Custom / Aleatorios)
-    // ─────────────────────────────────────────
-    function updateSidebarSets() {
-        const container = document.getElementById('sidebar-sets-info');
-        container.innerHTML = '';
-        for (const [key, val] of Object.entries(userCustomSets)) {
-            let strVal = val.join(',');
-            if(strVal.length > 15) strVal = strVal.substring(0,12) + '...';
-            container.innerHTML += `<span>${key} = {${strVal}}</span>`;
+            // Mostrar/Ocultar UI de Custom Sets
+            const customSetsUI = document.getElementById('custom-sets-ui');
+            customSetsUI.style.display = (mode === 'conjuntos') ? 'flex' : 'none';
+
+            clearResults();
         }
-    }
 
-    function applyCustomSets() {
-        const parseSet = (val) => val.split(',').map(x => {
-            const num = parseInt(x.trim());
-            return isNaN(num) ? x.trim() : num;
-        }).filter(x => x !== '');
+        // ─────────────────────────────────────────
+        // Gestión de Conjuntos (Custom / Aleatorios)
+        // ─────────────────────────────────────────
+        function updateSidebarSets() {
+            const container = document.getElementById('sidebar-sets-info');
+            container.innerHTML = '';
+            for (const [key, val] of Object.entries(userCustomSets)) {
+                let strVal = val.join(',');
+                if (strVal.length > 15) strVal = strVal.substring(0, 12) + '...';
+                container.innerHTML += `<span>${key} = {${strVal}}</span>`;
+            }
+        }
 
-        userCustomSets['A'] = parseSet(document.getElementById('set-a-input').value);
-        userCustomSets['B'] = parseSet(document.getElementById('set-b-input').value);
-        userCustomSets['C'] = parseSet(document.getElementById('set-c-input').value);
-        userCustomSets['U'] = parseSet(document.getElementById('set-u-input').value);
-        
-        updateSidebarSets();
-        showToast('Conjuntos actualizados exitosamente.', 'success');
-    }
+        function applyCustomSets() {
+            const parseSet = (val) => val.split(',').map(x => {
+                const num = parseInt(x.trim());
+                return isNaN(num) ? x.trim() : num;
+            }).filter(x => x !== '');
 
-    function generateRandomSets() {
-        fetch('/conjuntos-aleatorios')
-            .then(res => res.json())
-            .then(data => {
-                userCustomSets = data;
-                document.getElementById('set-a-input').value = data.A.join(',');
-                document.getElementById('set-b-input').value = data.B.join(',');
-                document.getElementById('set-c-input').value = data.C.join(',');
-                document.getElementById('set-u-input').value = data.U.join(',');
-                updateSidebarSets();
-                showToast('Conjuntos aleatorios generados.', 'success');
-            })
-            .catch(err => showToast('Error generando conjuntos.'));
-    }
+            userCustomSets['A'] = parseSet(document.getElementById('set-a-input').value);
+            userCustomSets['B'] = parseSet(document.getElementById('set-b-input').value);
+            userCustomSets['C'] = parseSet(document.getElementById('set-c-input').value);
+            userCustomSets['U'] = parseSet(document.getElementById('set-u-input').value);
 
-    // ─────────────────────────────────────────
-    // Inserción en Input
-    // ─────────────────────────────────────────
-    function insertSymbol(symbol) {
-        const input = document.getElementById('math-input');
-        const start = input.selectionStart;
-        const end = input.selectionEnd;
-        const before = input.value.substring(0, start);
-        const after = input.value.substring(end);
-        input.value = before + symbol + after;
+            updateSidebarSets();
+            showToast('Conjuntos actualizados exitosamente.', 'success');
+        }
 
-        const newPos = start + symbol.length;
-        input.focus();
-        input.setSelectionRange(newPos, newPos);
-    }
+        function generateRandomSets() {
+            fetch('/conjuntos-aleatorios')
+                .then(res => res.json())
+                .then(data => {
+                    userCustomSets = data;
+                    document.getElementById('set-a-input').value = data.A.join(',');
+                    document.getElementById('set-b-input').value = data.B.join(',');
+                    document.getElementById('set-c-input').value = data.C.join(',');
+                    document.getElementById('set-u-input').value = data.U.join(',');
+                    updateSidebarSets();
+                    showToast('Conjuntos aleatorios generados.', 'success');
+                })
+                .catch(err => showToast('Error generando conjuntos.'));
+        }
 
-    function backspace() {
-        const input = document.getElementById('math-input');
-        const start = input.selectionStart;
-        const end = input.selectionEnd;
-
-        if (start !== end) {
+        // ─────────────────────────────────────────
+        // Inserción en Input
+        // ─────────────────────────────────────────
+        function insertSymbol(symbol) {
+            const input = document.getElementById('math-input');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
             const before = input.value.substring(0, start);
             const after = input.value.substring(end);
-            input.value = before + after;
+            input.value = before + symbol + after;
+
+            const newPos = start + symbol.length;
             input.focus();
-            input.setSelectionRange(start, start);
-        } else if (start > 0) {
-            const before = input.value.substring(0, start - 1);
-            const after = input.value.substring(start);
-            input.value = before + after;
+            input.setSelectionRange(newPos, newPos);
+        }
+
+        function backspace() {
+            const input = document.getElementById('math-input');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+
+            if (start !== end) {
+                const before = input.value.substring(0, start);
+                const after = input.value.substring(end);
+                input.value = before + after;
+                input.focus();
+                input.setSelectionRange(start, start);
+            } else if (start > 0) {
+                const before = input.value.substring(0, start - 1);
+                const after = input.value.substring(start);
+                input.value = before + after;
+                input.focus();
+                input.setSelectionRange(start - 1, start - 1);
+            }
+        }
+
+        function clearInput() {
+            const input = document.getElementById('math-input');
+            input.value = '';
             input.focus();
-            input.setSelectionRange(start - 1, start - 1);
-        }
-    }
-
-    function clearInput() {
-        const input = document.getElementById('math-input');
-        input.value = '';
-        input.focus();
-        clearResults();
-    }
-
-    function clearResults() {
-        document.getElementById('solution-steps').innerHTML = '<p class="steps-placeholder">Esperando expresión...</p>';
-        document.getElementById('diagram-legend').innerHTML = '';
-        renderEmptyVenn();
-    }
-
-    function showToast(message, type = 'error') {
-        const container = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = 'toast toast-' + type;
-        toast.textContent = message;
-        container.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3500);
-    }
-
-    // ─────────────────────────────────────────
-    // SOLVER principal
-    // ─────────────────────────────────────────
-    function solveMath() {
-        const expresion = document.getElementById('math-input').value.trim();
-        const stepsContainer = document.getElementById('solution-steps');
-
-        if (!expresion) {
-            showToast('Por favor, ingresa una expresión.');
-            return;
+            clearResults();
         }
 
-        stepsContainer.innerHTML = '<div class="loading"><span></span><span></span><span></span></div>';
-
-        const payload = { expresion: expresion };
-        // Si estamos en conjuntos, enviar los custom sets al backend
-        if (currentMode === 'conjuntos') {
-            applyCustomSets(); // Asegurarnos de tener los inputs guardados
-            payload.conjuntos = userCustomSets;
+        function clearResults() {
+            document.getElementById('solution-steps').innerHTML = '<p class="steps-placeholder">Esperando expresión...</p>';
+            document.getElementById('diagram-legend').innerHTML = '';
+            renderEmptyVenn();
         }
 
-        fetch('/resolver', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                showToast(data.error);
-                stepsContainer.innerHTML = `<p class="steps-error">❌ ${data.error}</p>`;
-                renderEmptyVenn();
+        function showToast(message, type = 'error') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-' + type;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // ─────────────────────────────────────────
+        // SOLVER principal
+        // ─────────────────────────────────────────
+        function solveMath() {
+            const expresion = document.getElementById('math-input').value.trim();
+            const stepsContainer = document.getElementById('solution-steps');
+
+            if (!expresion) {
+                showToast('Por favor, ingresa una expresión.');
                 return;
             }
 
-            renderSteps(data.pasos_solucion || []);
+            stepsContainer.innerHTML = '<div class="loading"><span></span><span></span><span></span></div>';
 
-            if (data.venn_data) {
-                renderVenn(data.venn_data);
-            } else if (data.tipo_problema === 'Lógica') {
-                renderLogicIcon();
-            } else {
-                renderEmptyVenn();
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            showToast('Error al conectar con el servidor.');
-            stepsContainer.innerHTML = '<p class="steps-error">❌ Error de conexión.</p>';
-        });
-    }
-
-    document.getElementById('math-input').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') solveMath();
-    });
-
-    // ─────────────────────────────────────────
-    // Renderizado de PASOS
-    // ─────────────────────────────────────────
-    function renderSteps(pasos) {
-        const container = document.getElementById('solution-steps');
-        container.innerHTML = '';
-        pasos.forEach((paso, i) => {
-            const div = document.createElement('div');
-            div.className = 'step-item';
-            div.style.animationDelay = (i * 0.05) + 's';
-
-            if (paso.startsWith('─')) {
-                div.className = 'step-separator';
-                div.innerHTML = '<hr>';
-            } else if (paso.includes('✅') || paso.includes('❌') || paso.includes('⚠️')) {
-                div.classList.add('step-conclusion');
-                div.textContent = paso;
-            } else {
-                div.textContent = paso;
+            const payload = { expresion: expresion };
+            // Si estamos en conjuntos, enviar los custom sets al backend
+            if (currentMode === 'conjuntos') {
+                applyCustomSets(); // Asegurarnos de tener los inputs guardados
+                payload.conjuntos = userCustomSets;
             }
 
-            container.appendChild(div);
+            fetch('/resolver', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        showToast(data.error);
+                        stepsContainer.innerHTML = `<p class="steps-error">Error: ${data.error}</p>`;
+                        renderEmptyVenn();
+                        return;
+                    }
+
+                    renderSteps(data.pasos_solucion || []);
+
+                    if (data.venn_data) {
+                        renderVenn(data.venn_data);
+                    } else if (data.tipo_problema === 'Lógica') {
+                        renderLogicIcon();
+                    } else {
+                        renderEmptyVenn();
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast('Error al conectar con el servidor.');
+                    stepsContainer.innerHTML = '<p class="steps-error">Error de conexión.</p>';
+                });
+        }
+
+        document.getElementById('math-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') solveMath();
         });
-    }
 
-    // ─────────────────────────────────────────
-    // Renderizado del DIAGRAMA DE VENN (SVG)
-    // ─────────────────────────────────────────
-    const svg = document.getElementById('venn-svg');
+        // ─────────────────────────────────────────
+        // Renderizado de PASOS
+        // ─────────────────────────────────────────
+        function renderSteps(pasos) {
+            const container = document.getElementById('solution-steps');
+            container.innerHTML = '';
+            pasos.forEach((paso, i) => {
+                const div = document.createElement('div');
+                div.className = 'step-item';
+                div.style.animationDelay = (i * 0.05) + 's';
 
-    function renderEmptyVenn() {
-        svg.innerHTML = `
+                if (paso.startsWith('─')) {
+                    div.className = 'step-separator';
+                    div.innerHTML = '<hr>';
+                } else if (paso.includes('Resultado:') || paso.includes('Conclusión:')) {
+                    div.classList.add('step-conclusion');
+                    div.textContent = paso;
+                } else {
+                    div.textContent = paso;
+                }
+
+                container.appendChild(div);
+            });
+        }
+
+        // ─────────────────────────────────────────
+        // Renderizado del DIAGRAMA DE VENN (SVG)
+        // ─────────────────────────────────────────
+        const svg = document.getElementById('venn-svg');
+
+        function renderEmptyVenn() {
+            svg.innerHTML = `
             <text x="150" y="110" fill="#666" font-size="13" text-anchor="middle">Ingresa una expresión</text>
             <text x="150" y="128" fill="#666" font-size="11" text-anchor="middle">para ver el diagrama</text>`;
-        document.getElementById('diagram-legend').innerHTML = '';
-    }
-
-    function renderLogicIcon() {
-        svg.innerHTML = `
-            <text x="150" y="90" fill="#66fcf1" font-size="40" text-anchor="middle">🔀</text>
-            <text x="150" y="130" fill="#c5c6c7" font-size="13" text-anchor="middle">Desarrollo Simbólico</text>
-            <text x="150" y="148" fill="#c5c6c7" font-size="11" text-anchor="middle">y Tabla de Verdad →</text>`;
-        document.getElementById('diagram-legend').innerHTML = '';
-    }
-
-    function renderVenn(data) {
-        svg.innerHTML = '';
-        document.getElementById('diagram-legend').innerHTML = '';
-
-        if (data.tipo === 'venn2') {
-            renderVenn2(data);
-        } else if (data.tipo === 'venn3') {
-            renderVenn3(data);
+            document.getElementById('diagram-legend').innerHTML = '';
         }
-    }
 
-    // Colors used in SVG
-    const COLOR_A = "#66fcf1";
-    const COLOR_B = "#45a247";
-    const COLOR_C = "#ff7864";
-    const COLOR_RESULT = "rgba(255, 60, 160, 0.75)"; // Fucsia brillante para el resultado
+        function renderLogicIcon() {
+            svg.innerHTML = `
+            <text x="150" y="90" fill="#66fcf1" font-size="40" text-anchor="middle">Lógica</text>
+            <text x="150" y="130" fill="#c5c6c7" font-size="13" text-anchor="middle">Desarrollo Simbólico</text>
+            <text x="150" y="148" fill="#c5c6c7" font-size="11" text-anchor="middle">y Tabla de Verdad</text>`;
+            document.getElementById('diagram-legend').innerHTML = '';
+        }
 
-    function renderVenn2(data) {
-        const cx1 = 110, cx2 = 190, cy = 110, r = 70;
-        
-        const resSet = new Set(data.resultado);
-        const inA = (val) => data.solo_a.includes(val) || data.interseccion.includes(val);
-        const inB = (val) => data.solo_b.includes(val) || data.interseccion.includes(val);
+        function renderVenn(data) {
+            svg.innerHTML = '';
+            document.getElementById('diagram-legend').innerHTML = '';
 
-        // Check which whole regions are part of the result
-        const isSoloAResult = data.solo_a.length > 0 && data.solo_a.every(v => resSet.has(v));
-        const isInterResult = data.interseccion.length > 0 && data.interseccion.every(v => resSet.has(v));
-        const isSoloBResult = data.solo_b.length > 0 && data.solo_b.every(v => resSet.has(v));
+            if (data.tipo === 'venn2') {
+                renderVenn2(data);
+            } else if (data.tipo === 'venn3') {
+                renderVenn3(data);
+            }
+        }
 
-        const defs = `<defs>
+        // Colors used in SVG
+        const COLOR_A = "#66fcf1";
+        const COLOR_B = "#45a247";
+        const COLOR_C = "#ff7864";
+        const COLOR_RESULT = "rgba(255, 60, 160, 0.75)"; // Fucsia brillante para el resultado
+
+        function renderVenn2(data) {
+            const cx1 = 110, cx2 = 190, cy = 110, r = 70;
+
+            const resSet = new Set(data.resultado);
+            const inA = (val) => data.solo_a.includes(val) || data.interseccion.includes(val);
+            const inB = (val) => data.solo_b.includes(val) || data.interseccion.includes(val);
+
+            // Check which whole regions are part of the result
+            const isSoloAResult = data.solo_a.length > 0 && data.solo_a.every(v => resSet.has(v));
+            const isInterResult = data.interseccion.length > 0 && data.interseccion.every(v => resSet.has(v));
+            const isSoloBResult = data.solo_b.length > 0 && data.solo_b.every(v => resSet.has(v));
+
+            const defs = `<defs>
             <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                 <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             <clipPath id="clipA"><circle cx="${cx1}" cy="${cy}" r="${r}"/></clipPath>
             <clipPath id="clipB"><circle cx="${cx2}" cy="${cy}" r="${r}"/></clipPath>
         </defs>`;
-        svg.innerHTML = defs;
+            svg.innerHTML = defs;
 
-        // Base circles
-        svg.innerHTML += `
+            // Base circles
+            svg.innerHTML += `
             <circle cx="${cx1}" cy="${cy}" r="${r}" fill="rgba(102,252,241,0.07)" stroke="${COLOR_A}" stroke-width="2"/>
             <circle cx="${cx2}" cy="${cy}" r="${r}" fill="rgba(69,162,71,0.07)" stroke="${COLOR_B}" stroke-width="2"/>`;
 
-        // Highlight active regions
-        if (isSoloAResult) {
-            svg.innerHTML += `<path d="M ${cx1} ${cy-r} A ${r} ${r} 0 1 0 ${cx1} ${cy+r} A ${r} ${r} 0 0 1 ${cx1} ${cy-r}" fill="${COLOR_RESULT}"/>`;
-        }
-        if (isInterResult) {
-            svg.innerHTML += `<path d="${intersectionPath(cx1, cy, cx2, cy, r)}" fill="${COLOR_RESULT}"/>`;
-        }
-        if (isSoloBResult) {
-             svg.innerHTML += `<path d="M ${cx2} ${cy-r} A ${r} ${r} 0 1 1 ${cx2} ${cy+r} A ${r} ${r} 0 0 0 ${cx2} ${cy-r}" fill="${COLOR_RESULT}"/>`;
-        }
+            // Highlight active regions
+            if (isSoloAResult) {
+                svg.innerHTML += `<path d="M ${cx1} ${cy - r} A ${r} ${r} 0 1 0 ${cx1} ${cy + r} A ${r} ${r} 0 0 1 ${cx1} ${cy - r}" fill="${COLOR_RESULT}"/>`;
+            }
+            if (isInterResult) {
+                svg.innerHTML += `<path d="${intersectionPath(cx1, cy, cx2, cy, r)}" fill="${COLOR_RESULT}"/>`;
+            }
+            if (isSoloBResult) {
+                svg.innerHTML += `<path d="M ${cx2} ${cy - r} A ${r} ${r} 0 1 1 ${cx2} ${cy + r} A ${r} ${r} 0 0 0 ${cx2} ${cy - r}" fill="${COLOR_RESULT}"/>`;
+            }
 
-        // Si es una unión total y el resultado son todos:
-        if (isSoloAResult && isInterResult && isSoloBResult) {
-            svg.innerHTML += `
+            // Si es una unión total y el resultado son todos:
+            if (isSoloAResult && isInterResult && isSoloBResult) {
+                svg.innerHTML += `
             <circle cx="${cx1}" cy="${cy}" r="${r}" fill="${COLOR_RESULT}"/>
             <circle cx="${cx2}" cy="${cy}" r="${r}" fill="${COLOR_RESULT}"/>`;
-        }
+            }
 
-        // Labels
-        svg.innerHTML += `
+            // Labels
+            svg.innerHTML += `
             <text x="${cx1 - 30}" y="${cy - r + 18}" fill="${COLOR_A}" font-size="16" font-weight="bold" text-anchor="middle" filter="url(#glow)">${data.labels[0]}</text>
             <text x="${cx2 + 30}" y="${cy - r + 18}" fill="${COLOR_B}" font-size="16" font-weight="bold" text-anchor="middle" filter="url(#glow)">${data.labels[1]}</text>`;
 
-        // Values
-        const soloAStr = data.solo_a.length ? data.solo_a.slice(0,3).join(',') + (data.solo_a.length > 3 ? '...' : '') : '∅';
-        const interStr = data.interseccion.length ? data.interseccion.slice(0,2).join(',') + (data.interseccion.length > 2 ? '...' : '') : '∅';
-        const soloBStr = data.solo_b.length ? data.solo_b.slice(0,3).join(',') + (data.solo_b.length > 3 ? '...' : '') : '∅';
+            // Values
+            const soloAStr = data.solo_a.length ? data.solo_a.slice(0, 3).join(',') + (data.solo_a.length > 3 ? '...' : '') : '∅';
+            const interStr = data.interseccion.length ? data.interseccion.slice(0, 2).join(',') + (data.interseccion.length > 2 ? '...' : '') : '∅';
+            const soloBStr = data.solo_b.length ? data.solo_b.slice(0, 3).join(',') + (data.solo_b.length > 3 ? '...' : '') : '∅';
 
-        svg.innerHTML += `
+            svg.innerHTML += `
             <text x="${cx1 - 38}" y="${cy + 5}" fill="#fff" font-size="11" text-anchor="middle">{${soloAStr}}</text>
             <text x="150" y="${cy + 5}" fill="#fff" font-size="10" text-anchor="middle">{${interStr}}</text>
             <text x="${cx2 + 38}" y="${cy + 5}" fill="#fff" font-size="11" text-anchor="middle">{${soloBStr}}</text>`;
 
-        // Legend
-        const legend = document.getElementById('diagram-legend');
-        legend.innerHTML = `
+            // Legend
+            const legend = document.getElementById('diagram-legend');
+            legend.innerHTML = `
             <span class="legend-result" style="border-left-color: #ff3ca0;">Resultado Highlighted: {${data.resultado.join(', ')}}</span>
             <span class="legend-item"><span class="legend-dot" style="background:${COLOR_A}"></span> ${data.labels[0]}: {${data.solo_a.join(',')}}</span>
             <span class="legend-item"><span class="legend-dot" style="background:${COLOR_B}"></span> ${data.labels[1]}: {${data.solo_b.join(',')}}</span>`;
-    }
+        }
 
-    function renderVenn3(data) {
-        const cx1 = 105, cy1 = 90, cx2 = 195, cy2 = 90, cx3 = 150, cy3 = 165, r = 65;
-        const resSet = new Set(data.resultado);
+        function renderVenn3(data) {
+            const cx1 = 105, cy1 = 90, cx2 = 195, cy2 = 90, cx3 = 150, cy3 = 165, r = 65;
+            const resSet = new Set(data.resultado);
 
-        const defs = `<defs>
+            const defs = `<defs>
             <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                 <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
         </defs>`;
-        svg.innerHTML = defs;
+            svg.innerHTML = defs;
 
-        // Base circles
-        svg.innerHTML += `
+            // Base circles
+            svg.innerHTML += `
             <circle cx="${cx1}" cy="${cy1}" r="${r}" fill="rgba(102,252,241,0.07)" stroke="${COLOR_A}" stroke-width="2"/>
             <circle cx="${cx2}" cy="${cy2}" r="${r}" fill="rgba(69,162,71,0.07)" stroke="${COLOR_B}" stroke-width="2"/>
             <circle cx="${cx3}" cy="${cy3}" r="${r}" fill="rgba(255,120,100,0.07)" stroke="${COLOR_C}" stroke-width="2"/>`;
 
-        // Para simplificar en Venn3 SVG complejo, resaltamos el borde exterior del SVG si hay resultado
-        // En D3 se puede hacer por path exacto, en SVG vanilla agregamos un indicador de resultado total
-        
-        svg.innerHTML += `
+            // Para simplificar en Venn3 SVG complejo, resaltamos el borde exterior del SVG si hay resultado
+            // En D3 se puede hacer por path exacto, en SVG vanilla agregamos un indicador de resultado total
+
+            svg.innerHTML += `
             <text x="${cx1 - 35}" y="${cy1 - 50}" fill="${COLOR_A}" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[0]}</text>
             <text x="${cx2 + 20}" y="${cy2 - 50}" fill="${COLOR_B}" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[1]}</text>
             <text x="${cx3 + 30}" y="${cy3 + 55}" fill="${COLOR_C}" font-size="15" font-weight="bold" filter="url(#glow)">${data.labels[2]}</text>`;
 
-        const regions = [
-            { text: data.solo_a, x: cx1 - 30, y: cy1 - 5 },
-            { text: data.solo_b, x: cx2 + 30, y: cy2 - 5 },
-            { text: data.solo_c, x: cx3, y: cy3 + 35 },
-            { text: data.a_b, x: 150, y: 78 },
-            { text: data.a_c, x: cx1 + 15, y: cy3 - 5 },
-            { text: data.b_c, x: cx2 - 15, y: cy3 - 5 },
-            { text: data.a_b_c, x: 150, y: 140 },
-        ];
+            const regions = [
+                { text: data.solo_a, x: cx1 - 30, y: cy1 - 5 },
+                { text: data.solo_b, x: cx2 + 30, y: cy2 - 5 },
+                { text: data.solo_c, x: cx3, y: cy3 + 35 },
+                { text: data.a_b, x: 150, y: 78 },
+                { text: data.a_c, x: cx1 + 15, y: cy3 - 5 },
+                { text: data.b_c, x: cx2 - 15, y: cy3 - 5 },
+                { text: data.a_b_c, x: 150, y: 140 },
+            ];
 
-        regions.forEach(reg => {
-            if (reg.text.length > 0) {
-                // If this region is fully in result, draw a tiny colored dot behind it
-                const allInRes = reg.text.every(v => resSet.has(v));
-                if(allInRes) {
-                    svg.innerHTML += `<circle cx="${reg.x}" cy="${reg.y-3}" r="12" fill="${COLOR_RESULT}"/>`;
+            regions.forEach(reg => {
+                if (reg.text.length > 0) {
+                    // If this region is fully in result, draw a tiny colored dot behind it
+                    const allInRes = reg.text.every(v => resSet.has(v));
+                    if (allInRes) {
+                        svg.innerHTML += `<circle cx="${reg.x}" cy="${reg.y - 3}" r="12" fill="${COLOR_RESULT}"/>`;
+                    }
+                    svg.innerHTML += `<text x="${reg.x}" y="${reg.y}" fill="#fff" font-size="10" text-anchor="middle">{${reg.text.slice(0, 3).join(',')}}</text>`;
                 }
-                svg.innerHTML += `<text x="${reg.x}" y="${reg.y}" fill="#fff" font-size="10" text-anchor="middle">{${reg.text.slice(0,3).join(',')}}</text>`;
-            }
-        });
+            });
 
-        const legend = document.getElementById('diagram-legend');
-        legend.innerHTML = `<span class="legend-result" style="border-left-color: #ff3ca0; background:rgba(255, 60, 160, 0.15)">Resultado (Puntos Fucsia): {${data.resultado.join(', ')}}</span>`;
-    }
+            const legend = document.getElementById('diagram-legend');
+            legend.innerHTML = `<span class="legend-result" style="border-left-color: #ff3ca0; background:rgba(255, 60, 160, 0.15)">Resultado (Puntos Fucsia): {${data.resultado.join(', ')}}</span>`;
+        }
 
-    function intersectionPath(cx1, cy1, cx2, cy2, r) {
-        const d = Math.sqrt((cx2 - cx1) ** 2 + (cy2 - cy1) ** 2);
-        if (d >= 2*r) return '';
-        const a = (r * r - r * r + d * d) / (2 * d);
-        const h = Math.sqrt(r * r - a * a);
-        const mx = cx1 + a * (cx2 - cx1) / d;
-        const my = cy1 + a * (cy2 - cy1) / d;
-        const ix1 = mx + h * (cy2 - cy1) / d;
-        const iy1 = my - h * (cx2 - cx1) / d;
-        const ix2 = mx - h * (cy2 - cy1) / d;
-        const iy2 = my + h * (cx2 - cx1) / d;
-        return `M ${ix1} ${iy1} A ${r} ${r} 0 0 1 ${ix2} ${iy2} A ${r} ${r} 0 0 1 ${ix1} ${iy1} Z`;
-    }
+        function intersectionPath(cx1, cy1, cx2, cy2, r) {
+            const d = Math.sqrt((cx2 - cx1) ** 2 + (cy2 - cy1) ** 2);
+            if (d >= 2 * r) return '';
+            const a = (r * r - r * r + d * d) / (2 * d);
+            const h = Math.sqrt(r * r - a * a);
+            const mx = cx1 + a * (cx2 - cx1) / d;
+            const my = cy1 + a * (cy2 - cy1) / d;
+            const ix1 = mx + h * (cy2 - cy1) / d;
+            const iy1 = my - h * (cx2 - cx1) / d;
+            const ix2 = mx - h * (cy2 - cy1) / d;
+            const iy2 = my + h * (cx2 - cx1) / d;
+            return `M ${ix1} ${iy1} A ${r} ${r} 0 0 1 ${ix2} ${iy2} A ${r} ${r} 0 0 1 ${ix1} ${iy1} Z`;
+        }
 
-    // Inicializar
-    init();
+        // Inicializar
+        init();
     </script>
 </body>
+
 </html>

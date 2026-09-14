@@ -9,16 +9,12 @@ from core.set_parser import SetParser, random_sets
 app = Flask(__name__)
 
 # ─────────────────────────────────────────────
-# Conexión a BD (opcional, no interrumpe si falla)
-# ─────────────────────────────────────────────
+# Conexión a BD SQLite
 def obtener_conexion():
-    import mysql.connector
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",  # [PASSWORD] Se deja vacía por defecto para XAMPP
-        database="calculadora_discretas"
-    )
+    import sqlite3
+    import os
+    db_path = os.path.join(os.path.dirname(__file__), 'database.db')
+    return sqlite3.connect(db_path)
 
 def guardar_en_bd(tipo_problema, expresion, respuesta):
     """Intenta guardar el historial en la BD. Silencia errores si no hay conexión."""
@@ -26,11 +22,11 @@ def guardar_en_bd(tipo_problema, expresion, respuesta):
         conexion = obtener_conexion()
         cursor = conexion.cursor()
         cursor.execute(
-            "INSERT IGNORE INTO tipos_problemas (tipo_problema, descripcion) VALUES (%s, %s)",
+            "INSERT OR IGNORE INTO tipos_problemas (tipo_problema, descripcion) VALUES (?, ?)",
             (tipo_problema, "Generado automáticamente por el motor")
         )
         cursor.execute(
-            "INSERT INTO historial_escaneos (tipo_problema, expresion_original, resultado_json) VALUES (%s, %s, %s)",
+            "INSERT INTO historial_escaneos (tipo_problema, expresion_original, resultado_json) VALUES (?, ?, ?)",
             (tipo_problema, expresion, json.dumps(respuesta))
         )
         conexion.commit()
@@ -90,9 +86,9 @@ def resolver_expresion():
             pasos = logic_parser.solve(expresion_limpia)
         else:
             pasos = [
-                f"📌 Expresión recibida: {expresion}",
-                "❌ No se reconoció ningún operador de conjuntos ni de lógica proposicional.",
-                "💡 Sugerencia: Usa símbolos del teclado virtual como ∪, ∩, ∧, ∨, →, ¬"
+                f"Expresión recibida: {expresion}",
+                "Error: No se reconoció ningún operador de conjuntos ni de lógica proposicional.",
+                "Sugerencia: Usa símbolos del teclado virtual como ∪, ∩, ∧, ∨, →, ¬"
             ]
 
         respuesta = {
@@ -124,7 +120,7 @@ def crear_usuario():
 
         conexion = obtener_conexion()
         cursor = conexion.cursor()
-        sql = "INSERT INTO usuarios (nombres, apellidos, email, contrasena) VALUES (%s, %s, %s, %s)"
+        sql = "INSERT INTO usuarios (nombres, apellidos, email, contrasena) VALUES (?, ?, ?, ?)"
         cursor.execute(sql, (nombres, apellidos, email, contrasena))
         conexion.commit()
         cursor.close()
@@ -142,5 +138,7 @@ def open_browser():
     webbrowser.open_new('http://127.0.0.1:5000/')
 
 if __name__ == '__main__':
-    threading.Timer(1.25, open_browser).start()
+    import os
+    if os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
+        threading.Timer(1.25, open_browser).start()
     app.run(debug=True)

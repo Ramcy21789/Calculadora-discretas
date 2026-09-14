@@ -133,11 +133,11 @@ class SetParser:
         conjuntos_en_exp = self._get_conjuntos_en_expresion(expression)
         universo = self.conjuntos.get('U', set(range(1, 11)))
         
-        steps.append(f"📌 Expresión recibida: {expression}")
+        steps.append(f"Expresión recibida: {expression}")
         steps.append(f"─────────────────────────────────")
         
         # Mostrar los conjuntos con sus valores
-        steps.append("📦 Conjuntos utilizados:")
+        steps.append("Conjuntos utilizados:")
         for c in conjuntos_en_exp:
             conj = self.conjuntos.get(c, set())
             steps.append(f"   {c} = {{{', '.join(map(str, sorted(conj)))}}}")
@@ -149,7 +149,7 @@ class SetParser:
         operadores = [v for t, v in tokens if t == 'OP']
         
         # Evaluar paso a paso
-        steps.append("⚙️  Evaluación paso a paso:")
+        steps.append("Evaluación paso a paso:")
         
         result_set = None
         current_op = None
@@ -176,12 +176,12 @@ class SetParser:
                     set_a = self.conjuntos.get(conjuntos_en_exp[0], set())
                     set_b = self.conjuntos.get(conjuntos_en_exp[1], set()) if len(conjuntos_en_exp) > 1 else set()
                     es_subconj = set_a.issubset(set_b)
-                    steps.append(f"   Paso {step_num}: ¿{conjuntos_en_exp[0]} ⊆ {conjuntos_en_exp[1]}? → {'✅ Verdadero' if es_subconj else '❌ Falso'}")
+                    steps.append(f"   Paso {step_num}: ¿{conjuntos_en_exp[0]} ⊆ {conjuntos_en_exp[1]}? → {'Verdadero' if es_subconj else 'Falso'}")
                     step_num += 1
 
         steps.append(f"─────────────────────────────────")
         if result_set is not None:
-            steps.append(f"✅ Resultado: {{{', '.join(map(str, sorted(result_set)))}}}")
+            steps.append(f"Resultado: {{{', '.join(map(str, sorted(result_set)))}}}")
             steps.append(f"   Cardinalidad: |resultado| = {len(result_set)}")
 
         # Generar datos para el diagrama de Venn

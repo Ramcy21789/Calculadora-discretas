@@ -202,7 +202,7 @@ class LogicParser:
 
     def solve(self, expression):
         steps = []
-        steps.append(f"📌 Expresión original: {expression}")
+        steps.append(f"Expresión original: {expression}")
         
         self.variables = self.get_variables(expression)
         
@@ -211,12 +211,12 @@ class LogicParser:
         ast = self.build_ast(rpn)
 
         if not ast:
-            steps.append("❌ Error: Expresión mal formada.")
+            steps.append("Error: Expresión mal formada.")
             return steps
 
         # --- FASE 1: DESARROLLO SIMBÓLICO PASO A PASO ---
         steps.append("─────────────────────────────────")
-        steps.append("🧠 Simplificación Paso a Paso (Leyes de Inferencia):")
+        steps.append("Simplificación Paso a Paso (Leyes de Inferencia):")
         
         max_steps = 15
         current_step = 1
@@ -246,7 +246,7 @@ class LogicParser:
         # --- FASE 2: TABLA DE VERDAD ---
         steps.append("─────────────────────────────────")
         if not self.variables:
-            steps.append("✅ No hay variables proposicionales para construir una tabla de verdad (solo literales).")
+            steps.append("No hay variables proposicionales para construir una tabla de verdad (solo literales).")
             # Evaluate literal
             res = self.evaluate_rpn_table(rpn, {})
             steps.append(f"   Resultado final: {'Verdadero (V)' if res else 'Falso (F)'}")
@@ -255,7 +255,7 @@ class LogicParser:
         num_vars = len(self.variables)
         combinations = list(itertools.product([True, False], repeat=num_vars))
         
-        steps.append(f"📊 Tabla de Verdad ({len(combinations)} combinaciones):")
+        steps.append(f"Tabla de Verdad ({len(combinations)} combinaciones):")
         
         header = " | ".join(self.variables) + " | Resultado"
         steps.append("-" * len(header))
@@ -278,11 +278,11 @@ class LogicParser:
         steps.append("-" * len(header))
         
         if tautologia:
-            steps.append("✅ Conclusión: La expresión es una TAUTOLOGÍA (Siempre Verdadera).")
+            steps.append("Conclusión: La expresión es una TAUTOLOGÍA (Siempre Verdadera).")
         elif contradiccion:
-            steps.append("❌ Conclusión: La expresión es una CONTRADICCIÓN (Siempre Falsa).")
+            steps.append("Conclusión: La expresión es una CONTRADICCIÓN (Siempre Falsa).")
         else:
-            steps.append("⚠️ Conclusión: La expresión es una CONTINGENCIA (Depende de las variables).")
+            steps.append("Conclusión: La expresión es una CONTINGENCIA (Depende de las variables).")
             
         return steps
 
